@@ -32,4 +32,18 @@ public class RestaurantsService
     List<Restaurant> restaurants = _repository.GetAll();
     return restaurants;
   }
+
+  internal Restaurant UpdateRestaurant(int restaurantId, Restaurant restaurantData, string userId)
+  {
+    Restaurant restaurantToUpdate = GetRestaurantById(restaurantId);
+
+    if (restaurantToUpdate.CreatorId != userId) throw new Exception("NOT YOUR RESTAURANT");
+
+    restaurantToUpdate.Name = restaurantData.Name ?? restaurantToUpdate.Name;
+    restaurantToUpdate.Description = restaurantData.Description ?? restaurantToUpdate.Description;
+    restaurantToUpdate.IsShutdown = restaurantData.IsShutdown ?? restaurantToUpdate.IsShutdown; // must set IsShutdown to nullable in model
+
+    Restaurant restaurant = _repository.Update(restaurantToUpdate);
+    return restaurant;
+  }
 }
