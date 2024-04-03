@@ -25,12 +25,7 @@ public class RestaurantsRepository : IRepository<Restaurant>
     JOIN accounts account ON restaurant.creatorId = account.id
     WHERE restaurant.id = LAST_INSERT_ID();";
 
-    Restaurant restaurant = _db.Query<Restaurant, Profile, Restaurant>(sql, (restaurant, profile) =>
-    {
-      restaurant.Creator = profile;
-      return restaurant;
-    },
-     data).FirstOrDefault();
+    Restaurant restaurant = _db.Query<Restaurant, Profile, Restaurant>(sql, _populateCreator, data).FirstOrDefault();
     return restaurant;
   }
 
@@ -48,22 +43,33 @@ public class RestaurantsRepository : IRepository<Restaurant>
     FROM restaurants restaurant
     JOIN accounts account ON restaurant.creatorId = account.id;";
 
-    List<Restaurant> restaurants = _db.Query<Restaurant, Profile, Restaurant>(sql, (restaurant, profile) =>
-    {
-      restaurant.Creator = profile;
-      return restaurant;
-    }).ToList();
+    List<Restaurant> restaurants = _db.Query<Restaurant, Profile, Restaurant>(sql, _populateCreator).ToList();
 
     return restaurants;
   }
 
   public Restaurant GetById(int id)
   {
-    throw new NotImplementedException();
+    string sql = @"
+    SELECT
+    restaurant.*,
+    account.*
+    FROM restaurants restaurant
+    JOIN accounts account ON account.id = restaurant.creatorId
+    WHERE restaurant.id = @id;";
+
+    Restaurant restaurant = _db.Query<Restaurant, Profile, Restaurant>(sql, _populateCreator, new { id }).FirstOrDefault();
+    return restaurant;
   }
 
   public Restaurant Update(Restaurant data)
   {
     throw new NotImplementedException();
+  }
+
+  private Restaurant _populateCreator(Restaurant restaurant, Profile profile)
+  {
+    restaurant.Creator = profile;
+    return restaurant;
   }
 }
