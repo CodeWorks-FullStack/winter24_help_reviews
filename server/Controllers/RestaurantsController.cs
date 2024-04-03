@@ -29,4 +29,18 @@ public class RestaurantsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  [HttpGet]
+  public ActionResult<List<Restaurant>> GetRestaurants()
+  {
+    try
+    {
+      List<Restaurant> restaurants = _restaurantsService.GetRestaurants();
+      return Ok(restaurants);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }

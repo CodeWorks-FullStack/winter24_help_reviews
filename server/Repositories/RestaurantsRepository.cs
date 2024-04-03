@@ -41,7 +41,20 @@ public class RestaurantsRepository : IRepository<Restaurant>
 
   public List<Restaurant> GetAll()
   {
-    throw new NotImplementedException();
+    string sql = @"
+    SELECT
+    restaurant.*,
+    account.*
+    FROM restaurants restaurant
+    JOIN accounts account ON restaurant.creatorId = account.id;";
+
+    List<Restaurant> restaurants = _db.Query<Restaurant, Profile, Restaurant>(sql, (restaurant, profile) =>
+    {
+      restaurant.Creator = profile;
+      return restaurant;
+    }).ToList();
+
+    return restaurants;
   }
 
   public Restaurant GetById(int id)
