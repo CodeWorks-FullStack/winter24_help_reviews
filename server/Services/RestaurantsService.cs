@@ -20,7 +20,7 @@ public class RestaurantsService
 
   internal string DestroyRestaurant(int restaurantId, string userId)
   {
-    Restaurant restaurantToDestroy = GetRestaurantById(restaurantId);
+    Restaurant restaurantToDestroy = GetRestaurantById(restaurantId, userId);
 
     if (restaurantToDestroy.CreatorId != userId) throw new Exception("NOT YOUR RESTAURANT");
 
@@ -29,11 +29,16 @@ public class RestaurantsService
     return $"{restaurantToDestroy.Name} has been deleted";
   }
 
-  internal Restaurant GetRestaurantById(int restaurantId)
+  internal Restaurant GetRestaurantById(int restaurantId, string userId)
   {
     Restaurant restaurant = _repository.GetById(restaurantId);
 
     if (restaurant == null) throw new Exception($"Invalid id: {restaurantId}");
+
+    if (restaurant.IsShutdown == true && userId != restaurant.CreatorId)
+    {
+      throw new Exception($"Invalid id: {restaurantId} 😉");
+    }
 
     return restaurant;
   }
@@ -46,7 +51,7 @@ public class RestaurantsService
 
   internal Restaurant UpdateRestaurant(int restaurantId, Restaurant restaurantData, string userId)
   {
-    Restaurant restaurantToUpdate = GetRestaurantById(restaurantId);
+    Restaurant restaurantToUpdate = GetRestaurantById(restaurantId, userId);
 
     if (restaurantToUpdate.CreatorId != userId) throw new Exception("NOT YOUR RESTAURANT");
 

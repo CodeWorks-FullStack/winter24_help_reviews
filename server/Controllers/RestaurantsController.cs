@@ -44,12 +44,13 @@ public class RestaurantsController : ControllerBase
     }
   }
 
-  [HttpGet("{restaurantId}")]
-  public ActionResult<Restaurant> GetRestaurantById(int restaurantId)
+  [HttpGet("{restaurantId}")] //NOTE do not have to be authorized
+  public async Task<ActionResult<Restaurant>> GetRestaurantById(int restaurantId)
   {
     try
     {
-      Restaurant restaurant = _restaurantsService.GetRestaurantById(restaurantId);
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Restaurant restaurant = _restaurantsService.GetRestaurantById(restaurantId, userInfo?.Id);
       return Ok(restaurant);
     }
     catch (Exception exception)
