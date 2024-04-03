@@ -18,6 +18,17 @@ public class RestaurantsService
     return restaurant;
   }
 
+  internal string DestroyRestaurant(int restaurantId, string userId)
+  {
+    Restaurant restaurantToDestroy = GetRestaurantById(restaurantId);
+
+    if (restaurantToDestroy.CreatorId != userId) throw new Exception("NOT YOUR RESTAURANT");
+
+    _repository.Destroy(restaurantId);
+
+    return $"{restaurantToDestroy.Name} has been deleted";
+  }
+
   internal Restaurant GetRestaurantById(int restaurantId)
   {
     Restaurant restaurant = _repository.GetById(restaurantId);
