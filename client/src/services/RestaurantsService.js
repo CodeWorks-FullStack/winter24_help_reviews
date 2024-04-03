@@ -4,6 +4,10 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class RestaurantsService {
+  async destroyRestaurant(restaurantId) {
+    const res = await api.delete(`api/restaurants/${restaurantId}`)
+    logger.log('DESTROYED RESTAURANT', res.data)
+  }
   async getRestaurantById(restaurantId) {
     const res = await api.get(`api/restaurants/${restaurantId}`)
     logger.log('GOT RESTAURANT', res.data)
