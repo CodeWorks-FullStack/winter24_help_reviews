@@ -28,9 +28,13 @@
           </div>
 
           <div v-if="restaurant.creatorId == account.id">
-            <button @click="updateRestaurant()" class="btn btn-success">
+            <button v-if="restaurant.isShutdown" @click="updateRestaurant()" class="btn btn-success">
               <i class="mdi mdi-door-open"></i>
               Re-Open
+            </button>
+            <button v-else @click="updateRestaurant()" class="btn btn-danger">
+              <i class="mdi mdi-door"></i>
+              Close
             </button>
             <button @click="destroyRestaurant(restaurant.id)" class="btn btn-danger ms-3">
               <i class="mdi mdi-delete-forever"></i>
