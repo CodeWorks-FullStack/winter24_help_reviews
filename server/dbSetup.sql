@@ -23,4 +23,18 @@ CREATE TABLE
     FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
   );
 
+CREATE TABLE
+  reports (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
+    title VARCHAR(255) NOT NULL,
+    body VARCHAR(1000),
+    pictureOfDisgust VARCHAR(1000),
+    restaurantId INT NOT NULL,
+    creatorId VARCHAR(255) NOT NULL,
+    FOREIGN KEY (restaurantId) REFERENCES restaurants (id) ON DELETE CASCADE,
+    FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
+  );
+
 DROP TABLE restaurants;

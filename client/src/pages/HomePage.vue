@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <section class="row">
+    <section class="row my-3">
       <div v-for="restaurant in restaurants" :key="restaurant.id" class="col-md-4">
         <RestaurantCard :restaurant="restaurant" />
       </div>
@@ -13,6 +13,7 @@ import { computed, onMounted } from 'vue';
 import { restaurantsService } from '../services/RestaurantsService.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
+import RestaurantCard from '../components/RestaurantCard.vue';
 
 export default {
   setup() {
@@ -30,7 +31,8 @@ export default {
     return {
       restaurants: computed(() => AppState.restaurants)
     }
-  }
+  },
+  components: { RestaurantCard }
 }
 </script>
 
