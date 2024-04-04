@@ -62,4 +62,19 @@ public class ReportsRepository : IRepository<Report>
     report.Creator = profile;
     return report;
   }
+
+  public List<Report> GetReportsByRestaurantId(int restaurantId)
+  {
+    string sql = @"
+    SELECT
+    report.*,
+    account.*
+    FROM reports report
+    JOIN accounts account ON account.id = report.creatorId
+    WHERE report.restaurantId = @restaurantId;";
+
+    List<Report> reports = _db.Query<Report, Profile, Report>(sql, _populateCreator, new { restaurantId }).ToList();
+
+    return reports;
+  }
 }

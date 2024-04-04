@@ -1,4 +1,3 @@
-
 namespace help_reviews.Services;
 
 public class ReportsService
@@ -20,5 +19,13 @@ public class ReportsService
 
     Report report = _repository.Create(reportData);
     return report;
+  }
+
+  internal List<Report> GetReportsByRestaurantId(int restaurantId, string userId)
+  {
+    _restaurantsService.GetRestaurantById(restaurantId, userId); // just need the checks to run
+
+    List<Report> reports = _repository.GetReportsByRestaurantId(restaurantId);
+    return reports;
   }
 }
