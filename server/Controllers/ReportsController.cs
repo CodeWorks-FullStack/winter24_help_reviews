@@ -2,7 +2,7 @@ namespace help_reviews.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ReportsController
+public class ReportsController : ControllerBase
 {
 
   private readonly ReportsService _reportsService;
@@ -12,5 +12,22 @@ public class ReportsController
   {
     _auth0Provider = auth0Provider;
     _reportsService = reportsService;
+  }
+
+  [HttpPost]
+  [Authorize]
+  public async Task<ActionResult<Report>> CreateReport([FromBody] Report reportData)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      reportData.CreatorId = userInfo.Id;
+      Report report = _reportsService.CreateReport(reportData);
+      return Ok(report);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
   }
 }
