@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <section v-if="restaurant" class="row my-3">
+  <div v-if="restaurant" class="container">
+    <section class="row my-3">
       <div class="col-12 shadow-lg p-0">
         <div class="d-flex justify-content-between">
           <h1 class="text-success fs-3 m-1">{{ restaurant.name }}</h1>
@@ -38,11 +38,37 @@
       </div>
     </section>
 
-    <section class="row">
-      <div class="col-12">
-        {{ reports }}
+    <section class="row justify-content-center">
+      <div class="col-md-10">
+        <h2 class="fs-4">Reports for <span class="text-success">{{ restaurant.name }}</span></h2>
+      </div>
+      <div v-for="report in reports" :key="report.id" class="col-md-10 mb-3">
+        <div class="shadow-lg p-4">
+          <div class="d-flex justify-content-between">
+            <div></div>
+
+            <h3 class="fs-5 text-success">"{{ report.title }}"</h3>
+
+            <div class="d-flex">
+              <div>
+                <p>{{ report.creator.name }}</p>
+                <p>{{ report.createdAt.toLocaleDateString() }}</p>
+              </div>
+              <img :src="report.creator.picture" :alt="report.creator.name">
+            </div>
+
+          </div>
+          <p v-if="report.body">{{ report.body }}</p>
+        </div>
       </div>
     </section>
+  </div>
+  <div v-else class="container">
+    <div class="row">
+      <div class="col-12">
+        Loading...
+      </div>
+    </div>
   </div>
 </template>
 
