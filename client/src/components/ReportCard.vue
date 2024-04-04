@@ -1,6 +1,6 @@
 <template>
   <div class="shadow-lg p-4">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between align-items-center mb-2">
       <div></div>
 
       <h3 class="fs-5 text-success">"{{ report.title }}"</h3>
@@ -14,7 +14,7 @@
       </div>
 
     </div>
-    <p v-if="report.body">{{ report.body }}</p>
+    <p v-if="report.body" class="mb-0">{{ report.body }}</p>
   </div>
 </template>
 

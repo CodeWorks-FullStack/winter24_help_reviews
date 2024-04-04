@@ -14,7 +14,7 @@
           <p>{{ restaurant.description }}</p>
         </div>
         <div class="p-2 d-flex justify-content-between">
-          <div class="d-flex">
+          <div class="d-flex gap-2">
             <p>
               <i class="mdi mdi-account-multiple me-1 text-success fs-3"></i>
               <b>{{ restaurant.visits }}</b>
@@ -28,7 +28,10 @@
           </div>
 
           <div v-if="restaurant.creatorId == account.id">
-            <button class="btn btn-success"><i class="mdi mdi-door-open"></i> Re-Open</button>
+            <button @click="updateRestaurant()" class="btn btn-success">
+              <i class="mdi mdi-door-open"></i>
+              Re-Open
+            </button>
             <button @click="destroyRestaurant(restaurant.id)" class="btn btn-danger ms-3">
               <i class="mdi mdi-delete-forever"></i>
               Delete
@@ -107,6 +110,15 @@ export default {
           await restaurantsService.destroyRestaurant(restaurantId)
 
           router.push({ name: 'Home' })
+        }
+        catch (error) {
+          Pop.error(error);
+        }
+      },
+
+      async updateRestaurant() {
+        try {
+          await restaurantsService.updateRestaurant()
         }
         catch (error) {
           Pop.error(error);
