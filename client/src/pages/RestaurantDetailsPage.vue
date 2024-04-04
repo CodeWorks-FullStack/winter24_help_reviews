@@ -37,6 +37,12 @@
         </div>
       </div>
     </section>
+
+    <section class="row">
+      <div class="col-12">
+        {{ reports }}
+      </div>
+    </section>
   </div>
 </template>
 
@@ -80,6 +86,7 @@ export default {
     return {
       restaurant: computed(() => AppState.activeRestaurant),
       account: computed(() => AppState.account),
+      reports: computed(() => AppState.reports),
 
       async destroyRestaurant(restaurantId) {
         try {
