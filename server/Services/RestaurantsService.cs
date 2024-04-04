@@ -26,6 +26,17 @@ public class RestaurantsService
     return $"{restaurantToDestroy.Name} has been deleted";
   }
 
+  internal Restaurant GetRestaurantByIdAndIncrementVisits(int restaurantId, string userId)
+  {
+    Restaurant restaurant = GetRestaurantById(restaurantId, userId);
+
+    restaurant.Visits++;
+
+    _repository.Update(restaurant);
+
+    return restaurant;
+  }
+
   internal Restaurant GetRestaurantById(int restaurantId, string userId)
   {
     Restaurant restaurant = _repository.GetById(restaurantId);

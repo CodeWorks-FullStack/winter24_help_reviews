@@ -74,7 +74,8 @@ public class RestaurantsRepository : IRepository<Restaurant>
     SET
     name = @Name,
     description = @Description,
-    isShutdown = @IsShutdown
+    isShutdown = @IsShutdown,
+    visits = @Visits
     WHERE id = @Id;
     
     SELECT
