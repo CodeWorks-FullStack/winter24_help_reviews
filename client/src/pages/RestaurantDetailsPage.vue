@@ -83,6 +83,9 @@ export default {
       }
       catch (error) {
         Pop.error(error);
+        if (error.response.data.includes('😉')) {
+          router.push({ name: 'Home' })
+        }
       }
     }
 
