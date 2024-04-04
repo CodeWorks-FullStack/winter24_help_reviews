@@ -10,5 +10,6 @@ export class Restaurant {
     this.isShutdown = data.isShutdown
     this.creatorId = data.creatorId
     this.creator = data.creator
+    this.reportCount = data.reportCount
   }
 }
