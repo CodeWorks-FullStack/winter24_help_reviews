@@ -5,9 +5,12 @@
   <main>
     <router-view />
   </main>
-   <footer class="bg-dark text-light">
+  <footer class="bg-dark text-light">
     Made with 💖 by CodeWorks
   </footer>
+
+  <OffcanvasComponent />
+  <ModalComponent />
 </template>
 
 <script>
@@ -27,7 +30,7 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
-:root{
+:root {
   --main-height: calc(100vh - 32px - 64px);
 }
 
