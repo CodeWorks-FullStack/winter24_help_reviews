@@ -47,6 +47,7 @@ import { restaurantsService } from '../services/RestaurantsService.js'
 import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState.js'
+import { reportsService } from '../services/ReportsService.js'
 export default {
   setup() {
     const route = useRoute()
@@ -62,8 +63,18 @@ export default {
       }
     }
 
+    async function getReportsByRestaurantId(restaurantId) {
+      try {
+        await reportsService.getReportsByRestaurantId(restaurantId)
+      }
+      catch (error) {
+        Pop.error(error);
+      }
+    }
+
     watch(() => route.params.restaurantId, () => {
       getRestaurantById(route.params.restaurantId)
+      getReportsByRestaurantId(route.params.restaurantId)
     }, { immediate: true })
 
     return {
