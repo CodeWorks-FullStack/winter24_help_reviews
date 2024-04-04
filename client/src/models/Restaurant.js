@@ -1,8 +1,11 @@
-export class Restaurant {
+import { DatabaseItem } from "./DatabaseItem.js"
+
+export class Restaurant extends DatabaseItem {
   constructor(data) {
-    this.id = data.id
-    this.createdAt = new Date(data.createdAt)
-    this.updatedAt = new Date(data.updatedAt)
+    // this.id = data.id
+    // this.createdAt = new Date(data.createdAt)
+    // this.updatedAt = new Date(data.updatedAt)
+    super(data)
     this.name = data.name
     this.imgUrl = data.imgUrl
     this.description = data.description
