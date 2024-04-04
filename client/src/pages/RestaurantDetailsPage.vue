@@ -22,7 +22,7 @@
             </p>
             <p>
               <i class="mdi mdi-file-document-multiple me-1 text-success fs-3"></i>
-              <b>0</b>
+              <b>{{ reports.length }}</b>
               <span> reports</span>
             </p>
           </div>
