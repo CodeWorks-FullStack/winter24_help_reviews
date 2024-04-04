@@ -10,4 +10,5 @@ public class Restaurant : RepoItem<int>
   public string CreatorId { get; set; }
 
   public Profile Creator { get; set; }
+  public int ReportCount { get; set; }
 }
