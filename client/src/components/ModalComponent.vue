@@ -48,6 +48,7 @@ import { computed, ref } from 'vue'
 import { AppState } from '../AppState.js'
 import Pop from '../utils/Pop.js'
 import { reportsService } from '../services/ReportsService.js'
+import { Modal } from 'bootstrap'
 export default {
   setup() {
     const editableReportData = ref({})
@@ -58,6 +59,7 @@ export default {
         try {
           await reportsService.createReport(editableReportData.value)
           editableReportData.value = {}
+          Modal.getOrCreateInstance('#reportModal').hide()
         }
         catch (error) {
           Pop.error(error);

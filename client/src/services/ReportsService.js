@@ -7,6 +7,12 @@ class ReportsService {
   async createReport(reportData) {
     const res = await api.post('api/reports', reportData)
     logger.log('CREATED REPORT', res.data)
+    const newReport = new Report(res.data)
+    if (AppState.activeRestaurant?.id == newReport.restaurantId) {
+      AppState.reports.push(newReport)
+    }
+
+
   }
   async getReportsByRestaurantId(restaurantId) {
     const res = await api.get(`api/restaurants/${restaurantId}/reports`)
